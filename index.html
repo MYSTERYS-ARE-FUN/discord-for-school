@@ -7,14 +7,42 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <h1>Welcome to the Discord Replica!</h1>
+        <div class="header-container">
+            <h1>Discord Replica</h1>
+        </div>
     </header>
+
+    <!-- Main content -->
     <main>
-        <p>This is a simple version of Discord for testing!</p>
+        <div class="sidebar">
+            <ul>
+                <li>Home</li>
+                <li>Friends</li>
+                <li>Servers</li>
+            </ul>
+        </div>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>#general</h2>
+            </div>
+            <div class="chat-messages">
+                <!-- Messages will be dynamically added here -->
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type a message..." id="messageInput">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
     </main>
+
+    <!-- Footer -->
     <footer>
-        <p>© 2025 Discord Replica</p>
+        <p>&copy; 2025 Discord Replica</p>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
