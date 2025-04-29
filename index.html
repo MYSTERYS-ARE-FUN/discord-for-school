@@ -1,36 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChillChat</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Clone</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app-container">
-    <nav class="server-list">
-      <div class="server-icon">CC</div>
-      <div class="server-add">+</div>
-    </nav>
-    <aside class="channel-list">
-      <header># ChillRoom</header>
-      <ul>
-        <li class="channel active">general</li>
-        <li class="channel">random</li>
-        <li class="channel">music</li>
-      </ul>
-    </aside>
-    <section class="chat-view">
-      <header class="chat-header">
-        <h2># general</h2>
-      </header>
-      <div class="messages" id="messages"></div>
-      <footer class="chat-input">
-        <input id="msgInput" type="text" placeholder="Type a message...">
-        <button id="sendBtn">Send</button>
-      </footer>
-    </section>
-  </div>
-  <script src="script.js"></script>
+    <!-- Auth Containers -->
+    <div class="auth-container" id="loginContainer">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h2 class="auth-title">Welcome back!</h2>
+                <p class="auth-subtitle">We're so excited to see you again!</p>
+            </div>
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input" id="loginUsername" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="loginPassword" required>
+                </div>
+                <button type="submit" class="auth-button">Login</button>
+            </form>
+            <p class="auth-switch">Need an account? <a id="switchToSignup">Register</a></p>
+        </div>
+    </div>
+    
+    <div class="auth-container" id="signupContainer">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h2 class="auth-title">Create an account</h2>
+            </div>
+            <form class="auth-form" id="signupForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input" id="signupUsername" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="signupPassword" required>
+                </div>
+                <button type="submit" class="auth-button">Register</button>
+            </form>
+            <p class="auth-switch">Already have an account? <a id="switchToLogin">Login</a></p>
+        </div>
+    </div>
+    
+    <!-- Create Channel Modal -->
+    <div class="create-channel-modal" id="createChannelModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Create Channel</h3>
+            </div>
+            <form id="createChannelForm">
+                <div class="form-group">
+                    <label class="form-label">Channel Name</label>
+                    <input type="text" class="form-input" id="channelName" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Channel Description (Optional)</label>
+                    <input type="text" class="form-input" id="channelDescription">
+                </div>
+                <button type="submit" class="auth-button">Create Channel</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Main App -->
+    <div class="sidebar">
+        <div class="server-header">
+            <span>Discord Clone</span>
+            <button class="create-channel-btn" id="openCreateChannelModal">+</button>
+        </div>
+        <div class="channels-list" id="channelsList">
+            <!-- Channels will be inserted here -->
+        </div>
+        <div class="user-controls">
+            <div class="avatar" id="userAvatar"></div>
+            <div class="user-info">
+                <div class="username" id="displayUsername">Username</div>
+                <div class="status">Online</div>
+            </div>
+            <button id="logoutBtn" style="background:none; border:none; color:#b9bbbe; cursor:pointer;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    
+    <div class="main">
+        <div class="chat-header">
+            <span class="channel-name" id="currentChannelName"># general</span>
+            <span class="channel-topic" id="currentChannelDescription">General chat for everyone</span>
+        </div>
+        <div class="messages" id="messagesContainer">
+            <!-- Messages will be inserted here -->
+        </div>
+        <div class="message-input-container">
+            <input type="text" class="message-input" id="messageInput" placeholder="Message #general">
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
