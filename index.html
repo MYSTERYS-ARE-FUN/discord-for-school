@@ -1,48 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord Replica</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChillChat</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <h1>Discord Replica</h1>
-        </div>
-    </header>
-
-    <!-- Main content -->
-    <main>
-        <div class="sidebar">
-            <ul>
-                <li>Home</li>
-                <li>Friends</li>
-                <li>Servers</li>
-            </ul>
-        </div>
-
-        <div class="chat-container">
-            <div class="chat-header">
-                <h2>#general</h2>
-            </div>
-            <div class="chat-messages">
-                <!-- Messages will be dynamically added here -->
-            </div>
-            <div class="chat-input">
-                <input type="text" placeholder="Type a message..." id="messageInput">
-                <button onclick="sendMessage()">Send</button>
-            </div>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Discord Replica</p>
-    </footer>
-
-    <script src="script.js"></script>
+  <div class="app-container">
+    <nav class="server-list">
+      <div class="server-icon">CC</div>
+      <div class="server-add">+</div>
+    </nav>
+    <aside class="channel-list">
+      <header># ChillRoom</header>
+      <ul>
+        <li class="channel active">general</li>
+        <li class="channel">random</li>
+        <li class="channel">music</li>
+      </ul>
+    </aside>
+    <section class="chat-view">
+      <header class="chat-header">
+        <h2># general</h2>
+      </header>
+      <div class="messages" id="messages"></div>
+      <footer class="chat-input">
+        <input id="msgInput" type="text" placeholder="Type a message...">
+        <button id="sendBtn">Send</button>
+      </footer>
+    </section>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>

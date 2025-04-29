@@ -1,27 +1,18 @@
-// Array to hold the messages
-let messages = [];
+const messagesEl = document.getElementById('messages');
+const inputEl = document.getElementById('msgInput');
+const sendBtn = document.getElementById('sendBtn');
 
-// Function to add a message to the chat
-function sendMessage() {
-    const messageInput = document.getElementById('messageInput');
-    const messageText = messageInput.value.trim();
+sendBtn.addEventListener('click', () => {
+  const text = inputEl.value.trim();
+  if (!text) return;
+  addMessage('You', text);
+  inputEl.value = '';
+});
 
-    if (messageText !== "") {
-        messages.push(messageText);
-        updateChat();
-        messageInput.value = ""; // Clear input after sending
-    }
-}
-
-// Function to display messages
-function updateChat() {
-    const chatMessages = document.querySelector('.chat-messages');
-    chatMessages.innerHTML = ""; // Clear current messages
-
-    // Loop through the messages and display them
-    messages.forEach(msg => {
-        const messageElement = document.createElement('p');
-        messageElement.textContent = msg;
-        chatMessages.appendChild(messageElement);
-    });
+function addMessage(author, content) {
+  const msgEl = document.createElement('div');
+  msgEl.classList.add('message');
+  msgEl.innerHTML = `<span class="author">${author}:</span> <span class="content">${content}</span>`;
+  messagesEl.appendChild(msgEl);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
 }
